@@ -55,3 +55,30 @@ class TemplatesTestCase(unittest.TestCase):
     def test_get_cache_name(self):
         self.assertEqual(get_cache_key('name with spaces'),
                          'templates::name-with-spaces')
+
+
+class TemplateMixins(unittest.TestCase):
+    def setUp(self):
+        self.old_template_loaders = settings.TEMPLATE_LOADERS
+        if 'templates.loader.Loader' not in settings.TEMPLATE_LOADERS:
+            loader.template_source_loaders = None
+            settings.TEMPLATE_LOADERS = (list(settings.TEMPLATE_LOADERS) +
+                                         ['templates.loader.Loader'])
+
+        self.t1, _ = models.Template.objects.get_or_create(
+            name='Template_detail.html', content='detail')
+        self.t2, _ = models.Template.objects.get_or_create(
+            name='Template_preview.html', content='preview')
+
+        self.temp = models.Templateable()
+
+    def tearDown(self):
+        loader.template_source_loaders = None
+        settings.TEMPLATE_LOADERS = self.old_template_loaders
+
+    def test_basiscs(self):
+        self.assertTrue("detail" in self.temp.render())
+
+    # def test_load_templates(self):
+    #     result = loader.get_template("templates/test.html").render(Context({}))
+    #     self.assertEqual(result, 'test')

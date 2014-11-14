@@ -13,6 +13,8 @@ except ImportError:
     from datetime import datetime
     now = datetime.now
 
+from .mixins import TemplateMixin
+
 
 class Template(models.Model):
     """
@@ -63,3 +65,11 @@ class Template(models.Model):
 
 signals.post_save.connect(add_template_to_cache, sender=Template)
 signals.pre_delete.connect(remove_cached_template, sender=Template)
+
+# Test
+
+class Templateable(TemplateMixin):
+    '''
+    This model is for our tests.
+    '''
+    pass
