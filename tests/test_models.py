@@ -12,11 +12,8 @@ Tests for `django-publica-templates` models module.
 import unittest
 
 from templates import models
-from django.template import loader, Context, TemplateDoesNotExist
-from django.core.management import call_command
-from django.conf import settings as django_settings
+from django.template import loader, Context
 
-# from templates.conf import settings
 import test_settings as settings
 from templates.utils.cache import get_cache_key
 from templates.utils.template import check_template_syntax
