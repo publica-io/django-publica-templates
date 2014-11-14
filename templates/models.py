@@ -68,8 +68,8 @@ signals.pre_delete.connect(remove_cached_template, sender=Template)
 
 # Test
 
-# class Templateable(models.Model, TemplateMixin):
-#     '''
-#     This model is for our tests.
-#     '''
-#     pass
+class Templateable(TemplateMixin):
+    '''
+    This model is for our tests.
+    '''
+    pass

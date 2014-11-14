@@ -76,8 +76,9 @@ class TemplateMixins(unittest.TestCase):
         loader.template_source_loaders = None
         settings.TEMPLATE_LOADERS = self.old_template_loaders
 
-    def test_basiscs(self):
-        self.assertTrue("detail" in self.temp.render())
+    def test_basics(self):
+        self.temp.template = self.t1
+        self.assertTrue("test" in self.temp.render())
 
     def test_load_templates_render(self):
         # Set the tempalte t1 as template name and then load seperately and see render works
@@ -87,6 +88,6 @@ class TemplateMixins(unittest.TestCase):
 
     def test_load_templates_render_preview(self):
         # Set the tempalte t1 as template name and then load seperately and see render works
-        self.temp.template = self.t2
+        self.temp.preview_template = self.t2
         result = loader.get_template("templates/test.html").render(Context({}))
         self.assertEqual(result, self.temp.render_preview())
