@@ -15,12 +15,7 @@ class TemplateMixin(object):
         '''
         The method will render if db template is present or else just use default template and render
         '''
-
-        print self.template.name if self.template else "%s/%s%s.html" % (
-            self._meta.app_label,
-            self._meta.model_name,
-            self.template_name_suffix)
-        template = get_template(self.template.name if self.template else "%s/%s%s.html" % (
+        template = get_template(self.template.name if self.template.name else "%s/%s%s.html" % (
             self._meta.app_label,
             self._meta.model_name,
             self.template_name_suffix))
@@ -30,7 +25,7 @@ class TemplateMixin(object):
         '''
         The method will render if db template is present or else just use default template and render
         '''
-        template = get_template(self.preview_template.name if self.preview_template else "%s/%s%s.html" % (
+        template = get_template(self.preview_template.name if self.preview_template.name else "%s/%s%s.html" % (
             self._meta.app_label,
             self._meta.model_name,
             self.preview_template_name_suffix))

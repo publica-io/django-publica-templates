@@ -66,9 +66,9 @@ class TemplateMixins(unittest.TestCase):
                                          ['templates.loader.Loader'])
 
         self.t1, _ = models.Template.objects.get_or_create(
-            name='Template_detail.html', content='detail')
+            name='templates/test.html', content='detail')
         self.t2, _ = models.Template.objects.get_or_create(
-            name='Template_preview.html', content='preview')
+            name='templates/test.html', content='preview')
 
         self.temp = models.Templateable()
 
@@ -79,6 +79,14 @@ class TemplateMixins(unittest.TestCase):
     def test_basiscs(self):
         self.assertTrue("detail" in self.temp.render())
 
-    # def test_load_templates(self):
-    #     result = loader.get_template("templates/test.html").render(Context({}))
-    #     self.assertEqual(result, 'test')
+    def test_load_templates_render(self):
+        # Set the tempalte t1 as template name and then load seperately and see render works
+        self.temp.template = self.t1
+        result = loader.get_template("templates/test.html").render(Context({}))
+        self.assertEqual(result, self.temp.render())
+
+    def test_load_templates_render_preview(self):
+        # Set the tempalte t1 as template name and then load seperately and see render works
+        self.temp.template = self.t2
+        result = loader.get_template("templates/test.html").render(Context({}))
+        self.assertEqual(result, self.temp.render_preview())

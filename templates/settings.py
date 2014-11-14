@@ -20,13 +20,13 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.admin',
     'django.contrib.auth',
-    'dbtemplates',
+    'templates',
 ]
 
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
-    'dbtemplates.loader.Loader',
+    'templates.loader.Loader',
 )
 
 TEST_RUNNER = 'discover_runner.DiscoverRunner'
