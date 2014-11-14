@@ -8,8 +8,14 @@ class TemplateMixin(models.Model):
     template_name_suffix = '_detail'
     preview_template_name_suffix = '_preview'
 
-    template = models.ForeignKey('templates.Template', related_name='templates')
-    preview_template = models.ForeignKey('templates.Template', related_name='preview_templates')
+    template = models.ForeignKey(
+        'templates.Template', 
+        related_name='%(app_label)s_%(class)s_templates'
+    )
+    preview_template = models.ForeignKey(
+        'templates.Template', 
+        related_name='%(app_label)s_%(class)s_preview_templates'
+    )
 
     class Meta:
         abstract = True
