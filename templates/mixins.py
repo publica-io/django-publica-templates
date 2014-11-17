@@ -22,7 +22,7 @@ class TemplateMixin(models.Model):
             self._meta.app_label,
             self._meta.model_name,
             self.template_name_suffix))
-        return template.render(Context({'display': self}))
+        return template.render(Context({'view': self}))
 
     def render_preview(self):
         '''
@@ -32,4 +32,4 @@ class TemplateMixin(models.Model):
             self._meta.app_label,
             self._meta.model_name,
             self.preview_template_name_suffix))
-        return template.render(Context({'display': self}))
+        return template.render(Context({'view': self}))
