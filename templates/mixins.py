@@ -10,11 +10,15 @@ class TemplateMixin(models.Model):
 
     template = models.ForeignKey(
         'templates.Template', 
-        related_name='%(app_label)s_%(class)s_templates'
+        related_name='%(app_label)s_%(class)s_templates',
+        null=True,
+        blank=True
     )
     preview_template = models.ForeignKey(
         'templates.Template', 
-        related_name='%(app_label)s_%(class)s_preview_templates'
+        related_name='%(app_label)s_%(class)s_preview_templates',
+        null=True,
+        blank=True
     )
 
     class Meta:
