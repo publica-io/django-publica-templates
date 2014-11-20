@@ -19,7 +19,6 @@ from templates.utils.cache import get_cache_key
 from templates.utils.template import check_template_syntax
 
 
-
 class TemplatesTestCase(unittest.TestCase):
     def setUp(self):
         self.old_template_loaders = settings.TEMPLATE_LOADERS
@@ -81,13 +80,15 @@ class TemplateMixins(unittest.TestCase):
         self.assertTrue("test" in self.temp.render())
 
     def test_load_templates_render(self):
-        # Set the tempalte t1 as template name and then load seperately and see render works
+        # Set the tempalte t1 as template name and then load seperately and
+        # see render works
         self.temp.template = self.t1
         result = loader.get_template("templates/test.html").render(Context({}))
         self.assertEqual(result, self.temp.render())
 
     def test_load_templates_render_preview(self):
-        # Set the tempalte t1 as template name and then load seperately and see render works
+        # Set the tempalte t1 as template name and then load seperately and
+        # see render works
         self.temp.preview_template = self.t2
         result = loader.get_template("templates/test.html").render(Context({}))
         self.assertEqual(result, self.temp.render_preview())

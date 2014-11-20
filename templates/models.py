@@ -1,11 +1,11 @@
+from django.conf import settings
 from django.db import models
 from django.db.models import signals
 from django.template import TemplateDoesNotExist
 from django.utils.translation import ugettext_lazy as _
 
-import settings
-from utils.cache import add_template_to_cache, remove_cached_template
-from utils.template import get_template_source
+from .utils.cache import add_template_to_cache, remove_cached_template
+from .utils.template import get_template_source
 
 try:
     from django.utils.timezone import now
@@ -66,8 +66,8 @@ class Template(models.Model):
 signals.post_save.connect(add_template_to_cache, sender=Template)
 signals.pre_delete.connect(remove_cached_template, sender=Template)
 
-# Test
 
+# Test
 class Templateable(TemplateMixin):
     '''
     This model is for our tests.
