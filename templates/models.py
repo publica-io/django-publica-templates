@@ -32,7 +32,6 @@ class Template(models.Model):
     objects = models.Manager()
 
     class Meta:
-        db_table = 'django_template'
         verbose_name = _('template')
         verbose_name_plural = _('templates')
         ordering = ('name',)
@@ -66,10 +65,3 @@ class Template(models.Model):
 signals.post_save.connect(add_template_to_cache, sender=Template)
 signals.pre_delete.connect(remove_cached_template, sender=Template)
 
-
-# Test
-class Templateable(TemplateMixin):
-    '''
-    This model is for our tests.
-    '''
-    pass

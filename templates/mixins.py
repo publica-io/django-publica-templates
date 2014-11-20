@@ -3,6 +3,7 @@ from django.template import Context
 from django.template.loader import get_template
 
 
+
 class TemplateMixin(models.Model):
     template_name_suffix = '_detail'
     preview_template_name_suffix = '_preview'
@@ -23,12 +24,8 @@ class TemplateMixin(models.Model):
     class Meta:
         abstract = True
 
-    def render(self, context=None):
-        '''
-        The method will render if db template is present or else just use
-        default template and render
 
-        '''
+    def _render(self, template_suffix, context=None):
 
         if self.template.name:
             template_name = self.template.name
@@ -36,29 +33,21 @@ class TemplateMixin(models.Model):
             template_name = '{}/{}{}.html'.format(
                 self._meta.app_label,
                 self._meta.model_name,
-                self.template_name_suffix
+                template_suffix
             )
+    
+        if context is None:
+            context = {}
+    
+        context[self.__class__.__name__.lower()] = self
 
         template = get_template(template_name)
-        return template.render(Context({
-            'view': self,
-        }))
 
-    def render_preview(self, context=True):
-        '''
-        The method will render if db template is present or else just use
-        default template and render
+        return template.render(context)
 
-        '''
+    def render(self, context=None):
+        return self._render(self.template_name_suffix, context)
 
-        if self.preview_template.name:
-            template_name = self.preview_template.name
-        else:
-            template_name = '{}/{}{}.html'.format(
-                self._meta.app_label,
-                self._meta.model_name,
-                self.preview_template_name_suffix
-            )
-        template_name = template_name
-        template = get_template(template_name)
-        return template.render(Context({'view': self}))
+
+    def render_preview(self, context=None):
+        return self._render(self.preview_template_name_suffix, context)
