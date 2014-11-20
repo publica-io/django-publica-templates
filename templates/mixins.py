@@ -24,7 +24,7 @@ class TemplateMixin(models.Model):
     class Meta:
         abstract = True
 
-    def render(self):
+    def render(self, context=None):
         '''
         The method will render if db template is present or else just use default template and render
         '''
@@ -34,7 +34,7 @@ class TemplateMixin(models.Model):
             self.template_name_suffix))
         return template.render(Context({'view': self}))
 
-    def render_preview(self):
+    def render_preview(self, context=True):
         '''
         The method will render if db template is present or else just use default template and render
         '''
