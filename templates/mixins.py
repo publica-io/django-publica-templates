@@ -42,9 +42,6 @@ class TemplateMixin(models.Model):
         template = get_template(template_name)
         return template.render(Context({
             'view': self,
-
-            # This should *not* be here, django-compressor is nuts
-            'STATIC_URL': '/static/'
         }))
 
     def render_preview(self, context=True):
