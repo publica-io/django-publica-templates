@@ -2,6 +2,10 @@ from django.db import models
 from django.template import Context
 from django.template.loader import get_template
 
+try:
+    from polymorphic import PolymorphicModel
+except ImportError:
+    PolymorphicModel = None
 
 
 class TemplateMixin(models.Model):
@@ -39,7 +43,31 @@ class TemplateMixin(models.Model):
         if context is None:
             context = {}
     
-        context[self.__class__.__name__.lower()] = self
+        # We may be dealing with a Polymorphic Model here
+        # so to preserve the reuse of our templates, we want to
+        # add the current object under the context key of the
+        # base superclass, e.g.:
+        # 
+        # class WidgetChild(Widget):
+        #     #...
+        # 
+        # will yield 'widget'
+
+        # import ipdb; ipdb.set_trace()
+
+        klass_name = self.__class__.__name__.lower()
+
+        if PolymorphicModel is not None:
+            # If we have polymorphic models; recurse and try 
+            # to discover the base class.
+            bases = [b for b in self.__class__.__bases__
+                 if issubclass(b, PolymorphicModel)
+                 and not b._meta.abstract and not b._meta.proxy]
+
+            if len(bases) == 1:
+                klass_name = self.__class__.__bases__[0].__name__.lower()
+
+        context[klass_name] = self
 
         template = get_template(template_name)
 
