@@ -13,15 +13,13 @@ except ImportError:
     from datetime import datetime
     now = datetime.now
 
-from .mixins import TemplateMixin
-
 
 class Template(models.Model):
     """
     Defines a template model for use with the database template loader.
     The field ``name`` is the equivalent to the filename of a static template.
     """
-    name = models.CharField(_('name'), max_length=100,
+    name = models.CharField(_('name'), max_length=1024,
                             help_text=_("Example: 'flatpages/default.html'"))
     content = models.TextField(_('content'), blank=True)
     creation_date = models.DateTimeField(_('creation date'),
