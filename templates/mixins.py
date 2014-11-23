@@ -31,7 +31,7 @@ class TemplateMixin(models.Model):
 
     def _render(self, template_suffix, context=None):
 
-        if self.template.name:
+        if self.template:
             template_name = self.template.name
         else:
             template_name = '{}/{}{}.html'.format(
@@ -53,7 +53,6 @@ class TemplateMixin(models.Model):
         # 
         # will yield 'widget'
 
-        # import ipdb; ipdb.set_trace()
 
         klass_name = self.__class__.__name__.lower()
 
@@ -72,6 +71,7 @@ class TemplateMixin(models.Model):
         template = get_template(template_name)
 
         return template.render(context)
+
 
     def render(self, context=None):
         return self._render(self.template_name_suffix, context)
