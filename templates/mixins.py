@@ -53,7 +53,6 @@ class TemplateMixin(models.Model):
         # 
         # will yield 'widget'
 
-
         klass_name = self.__class__.__name__.lower()
 
         if PolymorphicModel is not None:
