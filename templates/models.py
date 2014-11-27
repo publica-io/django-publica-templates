@@ -30,8 +30,8 @@ class Template(models.Model):
     objects = models.Manager()
 
     class Meta:
-        verbose_name = _('template')
-        verbose_name_plural = _('templates')
+        verbose_name = _('Template Link')
+        verbose_name_plural = _('Links to Templates for Content Views/Widgets/Pages')
         ordering = ('name',)
 
     def __unicode__(self):

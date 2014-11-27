@@ -14,12 +14,16 @@ class TemplateMixin(models.Model):
 
     template = models.ForeignKey(
         'templates.Template',
+        help_text='Choose a template to render this content',
         related_name='%(app_label)s_%(class)s_templates',
         null=True,
         blank=True
     )
+
     preview_template = models.ForeignKey(
         'templates.Template',
+        verbose_name='Listing/Preview Template',
+        help_text='Optionally choose a Listing Template that will be used in List Views',
         related_name='%(app_label)s_%(class)s_preview_templates',
         null=True,
         blank=True
