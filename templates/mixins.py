@@ -33,7 +33,7 @@ class TemplateMixin(models.Model):
         abstract = True
 
 
-    def _render(self, template_suffix, context=None):
+    def get_template_name(self, template_suffix):
 
         if self.template:
             template_name = self.template.name
@@ -43,6 +43,10 @@ class TemplateMixin(models.Model):
                 self._meta.model_name,
                 template_suffix
             )
+        return template_name
+
+
+    def _render(self, template_suffix, context=None):
     
         if context is None:
             context = {}
@@ -71,7 +75,7 @@ class TemplateMixin(models.Model):
 
         context[klass_name] = self
 
-        template = get_template(template_name)
+        template = get_template(self.get_template_name(template_suffix))
 
         return template.render(context)
 
