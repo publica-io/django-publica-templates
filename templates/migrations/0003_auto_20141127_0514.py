@@ -27,14 +27,16 @@ class Migration(migrations.Migration):
             model_name='template',
             name='last_changed',
         ),
-        migrations.RemoveField(
-            model_name='template',
-            name='name',
-        ),
         migrations.AddField(
             model_name='template',
             name='path',
             field=models.FilePathField(default='', path=b'templates/', recursive=True),
+            preserve_default=False,
+        ),
+        migrations.AddField(
+            model_name='template',
+            name='_name',
+            field=models.CharField(default='', max_length=1024, editable=False),
             preserve_default=False,
         ),
     ]
