@@ -11,14 +11,22 @@ class Template(models.Model):
         path=FILEFIELD_PATH,
         recursive=True)
 
+    _name = models.CharField(
+        editable=False,
+        max_lenth=1024)
+
     class Meta:
 
-        verbose_name = _('Template Link')
-        verbose_name_plural = _('Links to Templates for Content Views/Widgets/Pages')
+        verbose_name = 'Template Link'
+        verbose_name_plural = 'Links to Templates for Content Views/Widgets/Pages'
         ordering = ('path',)
 
     def __unicode__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        self._name = self.path
+        return super(Template, self).save(*args, **kwargs)
 
     @property
     def name(self):
