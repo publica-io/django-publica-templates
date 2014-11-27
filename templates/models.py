@@ -13,7 +13,7 @@ class Template(models.Model):
 
     _name = models.CharField(
         editable=False,
-        max_lenth=1024)
+        max_length=1024)
 
     class Meta:
 
